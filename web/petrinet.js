@@ -242,6 +242,7 @@ function init(evt) {
 	checkEnabled();
 	checkInhibited();
 	display();
+	setTimeout(colorswap, 1000);
 
 	// Register the click handler for all Transitions:
 	for (i = 0; i < petriNet.transitions.length; i++) {
@@ -315,4 +316,15 @@ function display()
         }
 	});
 
+}
+
+function colorswap() {
+	console.log(document.getElementById("REFA").style.fill);
+	
+	if (document.getElementById("REFA").style.fill == 'rgb(0,0,200)' ) {
+		document.getElementById("REFA").style.fill = 'rgb(55,100,0)';
+	} else {
+		document.getElementById("REFA").style.fill = 'rgb(0,0,200)';
+	}
+	setTimeout(colorswap, 1000);
 }
