@@ -13,7 +13,7 @@ var petriNet = {
   ],
 
   transitions: [
-    { id:  6, name: "ACT_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0 },
+    { id:  6, name: "ACT_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id:  7, name: "ACT_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id:  8, name: "PREA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id:  9, name: "REFA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
@@ -133,8 +133,8 @@ var petriNet = {
     { source:  2, target:  8, type: "reset",     weight: 1 },  // BANK_1  >> PREA
 	
 	//timed arcs:
-	{ source:  6, target:  7, type: "timed", delay: 3000, age: -1},  // ACT_0    -<> ACT_1
-	{ source:  7, target:  6, type: "timed", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
+	{ id: 0, source:  6, target:  7, type: "timed", delay: 3000, age: -1},  // ACT_0    -<> ACT_1
+	{ id: 1, source:  7, target:  6, type: "timed", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
   ]	
 };
 
@@ -144,7 +144,7 @@ function fireTransition(node) {
 	var transition = petriNet.transitions.filter(function(d) {
 		return d.name == node;
 	})[0];
-
+	
 	//console.log(transition);
 
     if(transition.enabled == 1 && transition.inhibited == 0 && transition.timedInhibited == 0)
@@ -268,12 +268,56 @@ function checkEnabled()
 	});
 }
 
+
+function drawline (x1, x2, y1, y2) {
+	var svg = document.getElementById("svg4141");
+	var pt1 = svg.createSVGPoint();
+	var pt2 = svg.createSVGPoint();
+
+	pt1.x = x1;
+	pt1.y = y1;
+	pt2.x = x2;
+	pt2.y = y2;
+	
+	pt1.matrixTransform(svg.getScreenCTM().inverse());
+	pt2.matrixTransform(svg.getScreenCTM().inverse());
+	
+	var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+    newLine.setAttribute('id','line2');
+    newLine.setAttribute('x1',pt1.x);
+    newLine.setAttribute('y1',pt1.y);
+    newLine.setAttribute('x2',pt2.x);
+    newLine.setAttribute('y2',pt2.y);
+    newLine.setAttribute("stroke", "blue");
+	svg.append(newLine);
+}
+
+
 function init(evt) {
 	checkEnabled();
 	checkInhibited();
 	display();
 	setTimeout(clock, 1000);
+	
+	
+	var rect1 = document.getElementById("ACT_0").getBoundingClientRect();
+	var rect2 = document.getElementById("ACT_1").getBoundingClientRect();
+	
+	console.log(rect1);
+	console.log(rect2);
+	
+	drawline(rect1.left, rect2.left, rect1.top, rect2.top);
+	
+	/* var act1x = getBoundingClientRect(petriNet.transitions.filter(function(d) {
+		return d.id == 6 || d.id == 7 && d.timedInhibited == 1
+		}));
+		console.log("Done");
 
+		
+	("svg").append(' <line x1="10" y1="10" x2="40" y2="40" style="stroke: black">' );
+			 */
+	
+	
 	// Register the click handler for all Transitions:
 	for (i = 0; i < petriNet.transitions.length; i++) {
 		(function(name) {
