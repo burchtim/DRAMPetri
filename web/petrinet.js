@@ -1,5 +1,7 @@
 // Matthias Jung
 
+var blinker = 0;
+
 var petriNet = {
   places: [
     { id: 0, name: "IDLE"   , tokens: 2},
@@ -11,30 +13,29 @@ var petriNet = {
   ],
 
   transitions: [
-    { id:  6, name: "ACT_0"    , enabled: 0 , inhibited: 0 },
-    { id:  7, name: "ACT_1"    , enabled: 0 , inhibited: 0 },
-    { id:  8, name: "PREA"     , enabled: 0 , inhibited: 0 },
-    { id:  9, name: "REFA"     , enabled: 0 , inhibited: 0 },
-    { id: 10, name: "SREFEN"   , enabled: 0 , inhibited: 0 },
-    { id: 11, name: "PDE_PDNP" , enabled: 0 , inhibited: 0 },
-    { id: 12, name: "RD_0"     , enabled: 0 , inhibited: 0 },
-    { id: 13, name: "WR_0"     , enabled: 0 , inhibited: 0 },
-    { id: 14, name: "WRA_0"    , enabled: 0 , inhibited: 0 },
-    { id: 15, name: "RDA_0"    , enabled: 0 , inhibited: 0 },
-    { id: 16, name: "PRE_0"    , enabled: 0 , inhibited: 0 },
-    { id: 17, name: "RD_1"     , enabled: 0 , inhibited: 0 },
-    { id: 18, name: "WR_1"     , enabled: 0 , inhibited: 0 },
-    { id: 19, name: "WRA_1"    , enabled: 0 , inhibited: 0 },
-    { id: 20, name: "RDA_1"    , enabled: 0 , inhibited: 0 },
-    { id: 21, name: "PRE_1"    , enabled: 0 , inhibited: 0 },
-    { id: 22, name: "PDX_PDNA" , enabled: 0 , inhibited: 0 },
-    { id: 23, name: "PDX_PDNP" , enabled: 0 , inhibited: 0 },
-    { id: 24, name: "PDE_PDNA" , enabled: 0 , inhibited: 0 },
-    { id: 25, name: "SREFEX"   , enabled: 0 , inhibited: 0 }
+    { id:  6, name: "ACT_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0 },
+    { id:  7, name: "ACT_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id:  8, name: "PREA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id:  9, name: "REFA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 10, name: "SREFEN"   , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 11, name: "PDE_PDNP" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 12, name: "RD_0"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 13, name: "WR_0"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 14, name: "WRA_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 15, name: "RDA_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 16, name: "PRE_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 17, name: "RD_1"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 18, name: "WR_1"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 19, name: "WRA_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 20, name: "RDA_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 21, name: "PRE_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 22, name: "PDX_PDNA" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 23, name: "PDX_PDNP" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 24, name: "PDE_PDNA" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 25, name: "SREFEX"   , enabled: 0 , inhibited: 0, timedInhibited: 0  }
   ],
 
   arcs: [
-
 	//// Invisible arcs connected to 'AIR':
     { source: -1, target: 24, type: "normal",    weight: 0 },  // PDE_PDNA
     { source: -1, target:  8, type: "normal",    weight: 0 },  // PREA 
@@ -130,20 +131,23 @@ var petriNet = {
     { source:  0, target:  8, type: "reset",     weight: 1 },  // IDLE    >> PREA
     { source:  1, target:  8, type: "reset",     weight: 1 },  // BANK_0  >> PREA
     { source:  2, target:  8, type: "reset",     weight: 1 },  // BANK_1  >> PREA
-    
-  ]
+	
+	//timed arcs:
+	{ source:  6, target:  7, type: "timed", delay: 3000, age: -1},  // ACT_0    -<> ACT_1
+	{ source:  7, target:  6, type: "timed", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
+  ]	
 };
 
-function fireTransition(node)
-{
+function fireTransition(node) {
+	
 	// Get Clicked Transition:
 	var transition = petriNet.transitions.filter(function(d) {
 		return d.name == node;
 	})[0];
 
-	console.log(transition);
+	//console.log(transition);
 
-    if(transition.enabled == 1 && transition.inhibited == 0)
+    if(transition.enabled == 1 && transition.inhibited == 0 && transition.timedInhibited == 0)
     {
         // Clear connected Places with reset arcs:
         petriNet.arcs.filter(function(d) { // Get all input arcs:
@@ -154,7 +158,7 @@ function fireTransition(node)
             })[0];
             place.tokens = 0;
         });
-
+		
         // Clear connected input place:
         petriNet.arcs.filter(function(d) { // Get all input arcs:
             return (d.target == transition.id) && (d.type == "normal");
@@ -177,12 +181,38 @@ function fireTransition(node)
             })[0];
             place.tokens += arc.weight;
         });
-        
-        
+		
+		// Set all connected timing arcs to age of 0:
+		petriNet.arcs.filter(function(arc) { // Get all timed arcs:
+            return (arc.source == transition.id) && (arc.type == "timed");
+        }).forEach(function(arc, i){ // Foreach connected timed arc set the age to zero
+            console.log("FOUND");
+			arc.age = 0;
+        });	
+          
         checkEnabled();
         checkInhibited();
+		checkTimed();
+		
         display();
-        }
+    }
+}
+
+function checkTimed()
+{
+	petriNet.arcs.filter(function(d) { // Get all input arcs:
+			return (d.type == "timed");
+	}).forEach(function(arc, i){ // Foreach timed arc get the source transitions:	
+		
+		var trans = petriNet.transitions.filter(function(f) {
+				return f.id == arc.target;
+        })[0];
+		trans.timedInhibited = 0;
+		if(arc.age < arc.delay && arc.age != -1)
+		{
+			trans.timedInhibited = 1;
+		}
+	});
 }
 
 function checkInhibited()
@@ -242,7 +272,7 @@ function init(evt) {
 	checkEnabled();
 	checkInhibited();
 	display();
-	setTimeout(colorswap, 1000);
+	setTimeout(clock, 1000);
 
 	// Register the click handler for all Transitions:
 	for (i = 0; i < petriNet.transitions.length; i++) {
@@ -264,7 +294,7 @@ function clickHandler(node)
 function display()
 {
 	petriNet.transitions.forEach(function(transition, j){
-		if(transition.enabled == 1 && transition.inhibited == 0) 
+		if(transition.enabled == 1 && transition.inhibited == 0 && transition.timedInhibited == 0) 
 		{
 			document.getElementById(transition.name).style.fill = '#55d400';
 		}
@@ -316,15 +346,31 @@ function display()
         }
 	});
 
-}
-
-function colorswap() {
-	console.log(document.getElementById("REFA").style.fill);
-	
-	if (document.getElementById("REFA").style.fill == 'rgb(0,0,200)' ) {
+	// TODO remove later ...	
+	if (blinker == 0 ) {
 		document.getElementById("REFA").style.fill = 'rgb(55,100,0)';
+		blinker = 1;
 	} else {
 		document.getElementById("REFA").style.fill = 'rgb(0,0,200)';
+		blinker = 0;
 	}
-	setTimeout(colorswap, 1000);
+}
+
+function clock() {
+	//console.log(document.getElementById("REFA").style.fill);
+
+	petriNet.arcs.filter(function(d) { // Get all timing arcs:
+			return (d.type == "timed");
+	}).forEach(function(arc, i){ // Foreach timed arc increase the age:
+		if(arc.age != -1)
+		{
+			arc.age += 1000;
+			console.log(arc);
+		}
+	});
+	
+	checkTimed();
+    display();
+
+	setTimeout(clock, 1000);
 }
