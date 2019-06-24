@@ -133,9 +133,12 @@ var petriNet = {
     { source:  2, target:  8, type: "reset",     weight: 1 },  // BANK_1  >> PREA
 	
 	//timed arcs:
-	{ id: 0, source:  6, target:  7, type: "timed", delay: 3000, age: -1},  // ACT_0    -<> ACT_1
-	{ id: 1, source:  7, target:  6, type: "timed", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
-  ]	
+	{ id: 0, source:  6, target:  7,  type: "timed", name: "tRRD", delay: 3000, age: -1},  // ACT_0    -<> ACT_1
+	{ id: 1, source:  7, target:  6,  type: "timed", name: "tRRD", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
+	{ id: 2, source:  6, target:  12, type: "timed", name: "tRCD", delay: 5000, age: -1},  // ACT_0    -<> RD_0
+	{ id: 3, source:  7, target:  17, type: "timed", name: "tRCD", delay: 5000, age: -1},  // ACT_1    -<> RD_1 
+	//{ id: 4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 5000, age: -1},  // RD_0    -<> RD_0
+ ]	
 };
 
 function fireTransition(node) {
@@ -208,9 +211,21 @@ function checkTimed()
 				return f.id == arc.target;
         })[0];
 		trans.timedInhibited = 0;
-		if(arc.age < arc.delay && arc.age != -1)
-		{
+		timedArrow = document.getElementById("timedArrow-"+arc.id);
+		timedArrowText = document.getElementById("timedArrowText-"+arc.id);
+		
+		if(timedArrow != null) {
+			timedArrow.style.visibility = 'hidden';
+			timedArrowText.style.visibility = 'hidden';
+		}
+		
+		if(arc.age < arc.delay && arc.age != -1) {
 			trans.timedInhibited = 1;
+			console.log("ARC: "+arc.id+" "+timedArrow);
+			if(timedArrow != null) {
+				timedArrow.style.visibility = 'visible';
+				timedArrowText.style.visibility = 'visible';
+			}				
 		}
 	});
 }
@@ -269,7 +284,7 @@ function checkEnabled()
 }
 
 
-function drawline (id, x1, x2, y1, y2) {
+function drawline (id, name, x1, x2, y1, y2) {
 	var svg = document.getElementById("svg4141");
 	NS = svg.getAttribute('xmlns');
 	var pt1 = svg.createSVGPoint();
@@ -283,16 +298,38 @@ function drawline (id, x1, x2, y1, y2) {
 	var pt1b = pt1.matrixTransform(svg.getScreenCTM().inverse());
 	var pt2b = pt2.matrixTransform(svg.getScreenCTM().inverse());
 
-	var newLine = document.createElementNS(NS,'line');
-	newLine.setAttributeNS(null, 'id', id);
-	newLine.setAttributeNS(null, 'x1', pt1b.x+15);
-	newLine.setAttributeNS(null, 'y1', pt1b.y+15);
-	newLine.setAttributeNS(null, 'x2', pt2b.x+15);
-	newLine.setAttributeNS(null, 'y2', pt2b.y+15);
-	newLine.setAttributeNS(null, "stroke", "blue");
-	newLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
-	newLine.setAttributeNS(null, "visibility", "hidden");
-	svg.append(newLine);
+	if (x1==x2 && y1==y2){
+		var ellipticLine = document.createElementNS(NS,'path');
+		ellipticLine.setAttributeNS(null, 'id', "timedArrow-"+id);
+		ellipticLine.setAttributeNS(null, "d", "M 34.55257,37.274917 A 20.805597,20.895227 0 0 1 6.0455462,35.607419 20.805597,20.895227 0 0 1 6.0455465,6.9290685 20.805597,20.895227 0 0 1 34.55257,5.2615712");
+		ellipticLine.setAttributeNS(null, "stroke", "blue");
+		ellipticLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
+		//ellipticLine.setAttributeNS(null, "visibility", "hidden");
+		svg.append(ellipticLine);
+	} else {
+		var newLine = document.createElementNS(NS,'line');
+		newLine.setAttributeNS(null, 'id', "timedArrow-"+id);
+		newLine.setAttributeNS(null, 'x1', pt1b.x+16);
+		newLine.setAttributeNS(null, 'y1', pt1b.y+16);
+		newLine.setAttributeNS(null, 'x2', pt2b.x+16);
+		newLine.setAttributeNS(null, 'y2', pt2b.y+16);
+		newLine.setAttributeNS(null, "stroke", "blue");
+		newLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
+		//newLine.setAttributeNS(null, "visibility", "hidden");
+		svg.append(newLine);
+	}		
+	var newText = document.createElementNS(NS,"text");
+	newText.setAttributeNS(null,"x", (pt1b.x - pt2b.x) / 2 + pt2b.x);     
+	newText.setAttributeNS(null,"y", (pt1b.y - pt2b.y) / 2 + pt2b.y); 
+	newText.setAttributeNS(null,"font-size","16");
+	newText.setAttributeNS(null,"fill","blue");
+	newText.setAttributeNS(null, 'id', "timedArrowText-"+id);
+	newText.setAttributeNS(null, "visibility", "hidden");
+	
+	var textNode = document.createTextNode(name);
+	newText.appendChild(textNode);
+	
+	svg.append(newText);
 }
 
 
@@ -303,10 +340,24 @@ function init(evt) {
 	setTimeout(clock, 1000);
 	
 	
-	var rect1 = document.getElementById("ACT_0").getBoundingClientRect();
-	var rect2 = document.getElementById("ACT_1").getBoundingClientRect();
+	petriNet.arcs.filter(function(arc) { // Get all timed arcs:
+	return (arc.type == "timed");
+	}).forEach(function(arc, i) {
+		
+		var transSource = petriNet.transitions.filter(function(f) {
+                return f.id == arc.source;
+        })[0];
+		
+		var transTarget = petriNet.transitions.filter(function(f) {
+                return f.id == arc.target;
+        })[0];
+		
+		var rect1 = document.getElementById(transSource.name).getBoundingClientRect();
+		var rect2 = document.getElementById(transTarget.name).getBoundingClientRect();
+		drawline(arc.id, arc.name, rect1.left, rect2.left, rect1.top, rect2.top);
+	})
 	
-	drawline(0, rect1.left, rect2.left, rect1.top, rect2.top);
+	
 	
 	// Register the click handler for all Transitions:
 	for (i = 0; i < petriNet.transitions.length; i++) {
@@ -380,12 +431,12 @@ function display()
         }
 	});
 
-	// TODO remove later ...	
+	// Heart Beat
 	if (blinker == 0 ) {
-		document.getElementById("REFA").style.fill = 'rgb(55,100,0)';
+		document.getElementById("heart").style.fill = 'white';
 		blinker = 1;
 	} else {
-		document.getElementById("REFA").style.fill = 'rgb(0,0,200)';
+		document.getElementById("heart").style.fill = 'red';
 		blinker = 0;
 	}
 }
