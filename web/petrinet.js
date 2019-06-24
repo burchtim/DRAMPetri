@@ -269,8 +269,9 @@ function checkEnabled()
 }
 
 
-function drawline (x1, x2, y1, y2) {
+function drawline (id, x1, x2, y1, y2) {
 	var svg = document.getElementById("svg4141");
+	NS = svg.getAttribute('xmlns');
 	var pt1 = svg.createSVGPoint();
 	var pt2 = svg.createSVGPoint();
 
@@ -278,17 +279,19 @@ function drawline (x1, x2, y1, y2) {
 	pt1.y = y1;
 	pt2.x = x2;
 	pt2.y = y2;
-	
-	pt1.matrixTransform(svg.getScreenCTM().inverse());
-	pt2.matrixTransform(svg.getScreenCTM().inverse());
-	
-	var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
-    newLine.setAttribute('id','line2');
-    newLine.setAttribute('x1',pt1.x);
-    newLine.setAttribute('y1',pt1.y);
-    newLine.setAttribute('x2',pt2.x);
-    newLine.setAttribute('y2',pt2.y);
-    newLine.setAttribute("stroke", "blue");
+
+	var pt1b = pt1.matrixTransform(svg.getScreenCTM().inverse());
+	var pt2b = pt2.matrixTransform(svg.getScreenCTM().inverse());
+
+	var newLine = document.createElementNS(NS,'line');
+	newLine.setAttributeNS(null, 'id', id);
+	newLine.setAttributeNS(null, 'x1', pt1b.x+15);
+	newLine.setAttributeNS(null, 'y1', pt1b.y+15);
+	newLine.setAttributeNS(null, 'x2', pt2b.x+15);
+	newLine.setAttributeNS(null, 'y2', pt2b.y+15);
+	newLine.setAttributeNS(null, "stroke", "blue");
+	newLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
+	newLine.setAttributeNS(null, "visibility", "hidden");
 	svg.append(newLine);
 }
 
@@ -303,20 +306,7 @@ function init(evt) {
 	var rect1 = document.getElementById("ACT_0").getBoundingClientRect();
 	var rect2 = document.getElementById("ACT_1").getBoundingClientRect();
 	
-	console.log(rect1);
-	console.log(rect2);
-	
-	drawline(rect1.left, rect2.left, rect1.top, rect2.top);
-	
-	/* var act1x = getBoundingClientRect(petriNet.transitions.filter(function(d) {
-		return d.id == 6 || d.id == 7 && d.timedInhibited == 1
-		}));
-		console.log("Done");
-
-		
-	("svg").append(' <line x1="10" y1="10" x2="40" y2="40" style="stroke: black">' );
-			 */
-	
+	drawline(0, rect1.left, rect2.left, rect1.top, rect2.top);
 	
 	// Register the click handler for all Transitions:
 	for (i = 0; i < petriNet.transitions.length; i++) {
