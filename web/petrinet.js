@@ -329,10 +329,11 @@ function drawline (id, name, x1, x2, y1, y2) {
 	if (x1==x2 && y1==y2){
 		var ellipticLine = document.createElementNS(NS,'path');
 		ellipticLine.setAttributeNS(null, 'id', "timedArrow-"+id);
-		ellipticLine.setAttributeNS(null, "d", "M 34.55257,37.274917 A 20.805597,20.895227 0 0 1 6.0455462,35.607419 20.805597,20.895227 0 0 1 6.0455465,6.9290685 20.805597,20.895227 0 0 1 34.55257,5.2615712");
+		//ellipticLine.setAttributeNS(null, 'd',"M 34.55257,37.274917 A 20.805597,20.895227 0 0 1 6.0455462,35.607419 20.805597,20.895227 0 0 1 6.0455465,6.9290685 20.805597,20.895227 0 0 1 34.55257,5.2615712");
+		ellipticLine.setAttributeNS(null, 'd',"M "+pt1b.x+","+pt1b.y+" A 16,8 1 1 0 "+(pt1b.x+16)+","+pt1b.y);
 		ellipticLine.setAttributeNS(null, "stroke", "blue");
 		ellipticLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
-		ellipticLine.setAttributeNS(null, "visibility", "hidden");
+		//ellipticLine.setAttributeNS(null, "visibility", "hidden");
 		svg.append(ellipticLine);
 	} else {
 		var newLine = document.createElementNS(NS,'line');
@@ -478,7 +479,6 @@ function clock() {
 		if(arc.age != -1)
 		{
 			arc.age += 1000;
-			console.log(arc);
 		}
 	});
 	
