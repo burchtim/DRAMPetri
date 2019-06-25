@@ -137,7 +137,7 @@ var petriNet = {
 	{ id: 1, source:  7, target:  6,  type: "timed", name: "tRRD", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
 	{ id: 2, source:  6, target:  12, type: "timed", name: "tRCD", delay: 5000, age: -1},  // ACT_0    -<> RD_0
 	{ id: 3, source:  7, target:  17, type: "timed", name: "tRCD", delay: 5000, age: -1},  // ACT_1    -<> RD_1 
-	//{ id: 4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 5000, age: -1},  // RD_0    -<> RD_0
+	{ id: 4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 5000, age: -1},  // RD_0    -<> RD_0
  ]	
 };
 
@@ -203,6 +203,39 @@ function fireTransition(node) {
 
 function checkTimed()
 {
+	petriNet.transitions.forEach(function(trans, i) {	
+		
+		timedInhibited = 0;
+		petriNet.arcs.filter(function(arc) {
+				return trans.id == arc.target;
+        }).forEach(function(arc, i) {
+			timedArrow = document.getElementById("timedArrow-"+arc.id);
+			timedArrowText = document.getElementById("timedArrowText-"+arc.id);
+			
+			if(timedArrow != null) {
+				timedArrow.style.visibility = 'hidden';
+				timedArrowText.style.visibility = 'hidden';
+			}
+			
+			if(arc.age < arc.delay && arc.age != -1) {
+				timedInhibited++;
+				if(timedArrow != null) {
+					timedArrow.style.visibility = 'visible';
+					timedArrowText.style.visibility = 'visible';
+				}	
+			}
+		});
+		
+		if(timedInhibited == 0) {
+			trans.timedInhibited = 0;
+		} else {
+			trans.timedInhibited = 1;
+		}
+	});
+}
+
+function checkTimed2()
+{
 	petriNet.arcs.filter(function(d) { // Get all input arcs:
 			return (d.type == "timed");
 	}).forEach(function(arc, i){ // Foreach timed arc get the source transitions:	
@@ -210,22 +243,17 @@ function checkTimed()
 		var trans = petriNet.transitions.filter(function(f) {
 				return f.id == arc.target;
         })[0];
-		trans.timedInhibited = 0;
-		timedArrow = document.getElementById("timedArrow-"+arc.id);
-		timedArrowText = document.getElementById("timedArrowText-"+arc.id);
+
 		
-		if(timedArrow != null) {
-			timedArrow.style.visibility = 'hidden';
-			timedArrowText.style.visibility = 'hidden';
-		}
+		
+
 		
 		if(arc.age < arc.delay && arc.age != -1) {
 			trans.timedInhibited = 1;
 			console.log("ARC: "+arc.id+" "+timedArrow);
-			if(timedArrow != null) {
-				timedArrow.style.visibility = 'visible';
-				timedArrowText.style.visibility = 'visible';
-			}				
+						
+		} else {
+		    trans.timedInhibited = 0;
 		}
 	});
 }
@@ -304,7 +332,7 @@ function drawline (id, name, x1, x2, y1, y2) {
 		ellipticLine.setAttributeNS(null, "d", "M 34.55257,37.274917 A 20.805597,20.895227 0 0 1 6.0455462,35.607419 20.805597,20.895227 0 0 1 6.0455465,6.9290685 20.805597,20.895227 0 0 1 34.55257,5.2615712");
 		ellipticLine.setAttributeNS(null, "stroke", "blue");
 		ellipticLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
-		//ellipticLine.setAttributeNS(null, "visibility", "hidden");
+		ellipticLine.setAttributeNS(null, "visibility", "hidden");
 		svg.append(ellipticLine);
 	} else {
 		var newLine = document.createElementNS(NS,'line');
@@ -315,7 +343,7 @@ function drawline (id, name, x1, x2, y1, y2) {
 		newLine.setAttributeNS(null, 'y2', pt2b.y+16);
 		newLine.setAttributeNS(null, "stroke", "blue");
 		newLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
-		//newLine.setAttributeNS(null, "visibility", "hidden");
+		newLine.setAttributeNS(null, "visibility", "hidden");
 		svg.append(newLine);
 	}		
 	var newText = document.createElementNS(NS,"text");
