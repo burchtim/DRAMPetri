@@ -816,7 +816,7 @@
      style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.99975002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.99925009, 2.99925009;stroke-dashoffset:0;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
-     id="PDX_PDNP"
+     id="PDXP"
      d="m 914.33858,320.69533 32,0 0,-32 -32,0 z m 0,0"
      style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
   <text
@@ -1578,12 +1578,12 @@
      style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
-     id="PDE_PDNA"
+     id="PDEA"
      d="m 707.60242,70.83393 32,0 0,-32 -32,0 z m 0,0"
      style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
-     id="PDX_PDNA"
+     id="PDXA"
      d="m 914.58408,70.83393 32,0 0,-32 -32,0 z m 0,0"
      style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
   <path
@@ -1711,7 +1711,7 @@
      inkscape:connector-curvature="0" />
   <path
      inkscape:connector-curvature="0"
-     id="PDE_PDNP"
+     id="PDEP"
      d="m 707.35693,320.69533 31.99995,0 0,-32 -31.99995,0 z m 0,0"
      style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1" />
   <text

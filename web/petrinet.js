@@ -18,7 +18,7 @@ var petriNet = {
     { id:  8, name: "PREA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id:  9, name: "REFA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 10, name: "SREFEN"   , enabled: 0 , inhibited: 0, timedInhibited: 0  },
-    { id: 11, name: "PDE_PDNP" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 11, name: "PDEP"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 12, name: "RD_0"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 13, name: "WR_0"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 14, name: "WRA_0"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
@@ -29,15 +29,15 @@ var petriNet = {
     { id: 19, name: "WRA_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 20, name: "RDA_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 21, name: "PRE_1"    , enabled: 0 , inhibited: 0, timedInhibited: 0  },
-    { id: 22, name: "PDX_PDNA" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
-    { id: 23, name: "PDX_PDNP" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
-    { id: 24, name: "PDE_PDNA" , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 22, name: "PDXA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 23, name: "PDXP"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
+    { id: 24, name: "PDEA"     , enabled: 0 , inhibited: 0, timedInhibited: 0  },
     { id: 25, name: "SREFEX"   , enabled: 0 , inhibited: 0, timedInhibited: 0  }
   ],
 
   arcs: [
 	//// Invisible arcs connected to 'AIR':
-    { source: -1, target: 24, type: "normal",    weight: 0 },  // PDE_PDNA
+    { source: -1, target: 24, type: "normal",    weight: 0 },  // PDEA
     { source: -1, target:  8, type: "normal",    weight: 0 },  // PREA 
 
 	//// Normal arcs:
@@ -79,18 +79,18 @@ var petriNet = {
     { source:  9, target:  0, type: "normal",    weight: 2 },  // REFA     -> IDLE
 
 	// Powerdown:
-    { source: 24, target:  3, type: "normal",    weight: 1 },  // PDE_PDNA -> PDNA
-    { source:  3, target: 22, type: "normal",    weight: 1 },  // PDNA     -> PDX_PDNA
+    { source: 24, target:  3, type: "normal",    weight: 1 },  // PDEA     -> PDNA
+    { source:  3, target: 22, type: "normal",    weight: 1 },  // PDNA     -> PDXA
 
     { source:  0, target: 10, type: "normal",    weight: 2 },  // IDLE     -> SREFEN
     { source: 10, target:  5, type: "normal",    weight: 1 },  // SREFEN   -> SREF
     { source:  5, target: 25, type: "normal",    weight: 1 },  // SREF     -> SREFEX
     { source: 25, target:  0, type: "normal",    weight: 2 },  // SREFEX   -> IDLE
 
-    { source:  0, target: 11, type: "normal",    weight: 2 },  // IDLE     -> PDE_PDNP
-    { source: 11, target:  4, type: "normal",    weight: 1 },  // PDE_PDNP -> PDNP
-    { source:  4, target: 23, type: "normal",    weight: 1 },  // PDNP     -> PDX_PDNP
-    { source: 23, target:  0, type: "normal",    weight: 2 },  // PDX_PDNP -> IDLE
+    { source:  0, target: 11, type: "normal",    weight: 2 },  // IDLE     -> PDEP
+    { source: 11, target:  4, type: "normal",    weight: 1 },  // PDEP     -> PDNP
+    { source:  4, target: 23, type: "normal",    weight: 1 },  // PDNP     -> PDXP
+    { source: 23, target:  0, type: "normal",    weight: 2 },  // PDXP     -> IDLE
 
 	//// Inhibitor Arcs:
 	// BANK_0
@@ -120,12 +120,12 @@ var petriNet = {
     { source:  3, target:  9, type: "inhibitor", weight: 1 },  // PDNA    -o REFA
 
 	// Powerdown
-    { source:  3, target: 11, type: "inhibitor", weight: 1 },  // PDNA    -o PDE_PDNP
+    { source:  3, target: 11, type: "inhibitor", weight: 1 },  // PDNA    -o PDEP
     { source:  3, target: 10, type: "inhibitor", weight: 1 },  // PDNA    -o SREFEN
-    { source:  3, target: 24, type: "inhibitor", weight: 1 },  // PDNA    -o PDE_PDNA
-    { source:  5, target: 24, type: "inhibitor", weight: 1 },  // SREF    -o PDE_PDNA
-    { source:  4, target: 24, type: "inhibitor", weight: 1 },  // PDNP    -o PDE_PDNA
-    { source:  0, target: 24, type: "inhibitor", weight: 2 },  // IDLE    -o PDE_PDNA
+    { source:  3, target: 24, type: "inhibitor", weight: 1 },  // PDNA    -o PDEA
+    { source:  5, target: 24, type: "inhibitor", weight: 1 },  // SREF    -o PDEA
+    { source:  4, target: 24, type: "inhibitor", weight: 1 },  // PDNP    -o PDEA
+    { source:  0, target: 24, type: "inhibitor", weight: 2 },  // IDLE    -o PDEA
 
     //// Reset arcs:
     { source:  0, target:  8, type: "reset",     weight: 1 },  // IDLE    >> PREA
@@ -133,12 +133,70 @@ var petriNet = {
     { source:  2, target:  8, type: "reset",     weight: 1 },  // BANK_1  >> PREA
 	
 	//timed arcs:
-	{ id: 0, source:  6, target:  7,  type: "timed", name: "tRRD", delay: 20, age: -1},  // ACT_0    -<> ACT_1
-	{ id: 1, source:  7, target:  6,  type: "timed", name: "tRRD", delay: 20, age: -1},  // ACT_1    -<> ACT_0
-	{ id: 2, source:  6, target:  12, type: "timed", name: "tRCD", delay: 12.5, age: -1},  // ACT_0    -<> RD_0
-	{ id: 3, source:  7, target:  17, type: "timed", name: "tRCD", delay: 12.5, age: -1},  // ACT_1    -<> RD_1 
-	{ id: 4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 10, age: -1},  // RD_0    -<> RD_0
-	{ id: 5, source:  17, target: 17, type: "timed", name: "tCCD", delay: 10, age: -1},  // RD_1    -<> RD_1
+/* 	{ id:  0, source:  6, target:  7,  type: "timed", name: "tRRD", delay: 20.0, age: -1},  // ACT_0    -<> ACT_1
+	{ id:  1, source:  7, target:  6,  type: "timed", name: "tRRD", delay: 20.0, age: -1},  // ACT_1    -<> ACT_0
+	{ id:  2, source:  6, target:  12, type: "timed", name: "tRCD", delay: 12.5, age: -1},  // ACT_0    -<> RD_0
+	{ id:  3, source:  7, target:  17, type: "timed", name: "tRCD", delay: 12.5, age: -1},  // ACT_1    -<> RD_1 
+	{ id:  4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 10.0, age: -1},  // RD_0     -<> RD_0
+	{ id:  5, source:  17, target: 17, type: "timed", name: "tCCD", delay: 10.0, age: -1},  // RD_1     -<> RD_1 */
+
+	{ id:  1, source:   6, target:  16,  type: "timed", name: "tRAS",     delay: 37.5, age: -1},  // ACT_0    -<> PRE_0
+	{ id:  2, source:   6, target:  12,  type: "timed", name: "tRCD",     delay: 12.5, age: -1},  // ACT_0    -<> RD_0
+	{ id:  3, source:   6, target:  13,  type: "timed", name: "tRCD",     delay: 12.5, age: -1},  // ACT_0    -<> WR_0
+	{ id:  4, source:   6, target:  15,  type: "timed", name: "tRCD",     delay: 12.5, age: -1},  // ACT_0    -<> RDA_0
+	{ id:  5, source:   6, target:  14,  type: "timed", name: "tRCD",     delay: 12.5, age: -1},  // ACT_0    -<> WRA_0
+
+	{ id:  6, source:  12, target:  16,  type: "timed", name: "tRTP",     delay: 10.0, age: -1},  // RD_0     -<> PRE_0
+	{ id:  7, source:  15, target:   6,  type: "timed", name: "tRDAACT",  delay: 22.5, age: -1},  // RDA_0    -<> ACT_0
+	{ id:  8, source:  13, target:  16,  type: "timed", name: "tWRPRE",   delay: 27.5, age: -1},  // WR_0     -<> PRE_0
+	{ id:  9, source:  14, target:   6,  type: "timed", name: "tWRAACT",  delay: 40.0, age: -1},  // WRA_0    -<> ACT_0
+	{ id: 10, source:  16, target:   6,  type: "timed", name: "tRP",      delay: 12.5, age: -1},  // PRE_0    -<> ACT_0
+	
+	{ id: 11, source:   7, target:  21,  type: "timed", name: "tRTP",     delay: 10.0, age: -1},  // ACT_1    -<> PRE_1
+	{ id: 12, source:   7, target:  17,  type: "timed", name: "tRDAACT",  delay: 22.5, age: -1},  // ACT_1    -<> RD_1
+	{ id: 13, source:   7, target:  18,  type: "timed", name: "tWRPRE",   delay: 27.5, age: -1},  // ACT_1    -<> WR_1
+	{ id: 14, source:   7, target:  20,  type: "timed", name: "tWRAACT",  delay: 40.0, age: -1},  // ACT_1    -<> RDA_1
+	{ id: 15, source:   7, target:  19,  type: "timed", name: "tRP",      delay: 12.5, age: -1},  // ACT_1    -<> WRA_1
+	
+	{ id: 16, source:  17, target:  21,  type: "timed", name: "tRTP",     delay: 10.0, age: -1},  // RD_1     -<> PRE_1
+	{ id: 17, source:  20, target:   7,  type: "timed", name: "tRDAACT" , delay: 22.5, age: -1},  // RDA_1    -<> ACT_1
+	{ id: 18, source:  18, target:  21,  type: "timed", name: "tWRPRE",   delay: 27.5, age: -1},  // WR_1     -<> PRE_1
+	{ id: 19, source:  19, target:   7,  type: "timed", name: "tWRAACT",  delay: 40.0, age: -1},  // WRA_1    -<> ACT_1
+	{ id: 20, source:  21, target:   7,  type: "timed", name: "tRP",      delay: 12.5, age: -1},  // PRE_1    -<> ACT_1
+	
+	{ id: 21, source:   9, target:   6,  type: "timed", name: "tRFC" ,    delay: 20, age: -1},  // REFA     -<> ACT_0
+	{ id: 22, source:   9, target:   7,  type: "timed", name: "tRFC",     delay: 20, age: -1},  // REFA     -<> ACT_1
+	{ id: 23, source:  23, target:   6,  type: "timed", name: "tXP",      delay: 20, age: -1},  // PDXP     -<> ACT_0
+	{ id: 24, source:  23, target:   7,  type: "timed", name: "tXP",      delay: 20, age: -1},  // PDXP     -<> ACT_1
+	
+	{ id: 25, source:  25, target:   6,  type: "timed", name: "tXS",      delay: 20, age: -1},  // SREFEX   -<> ACT_0
+	{ id: 26, source:  25, target:   7,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> ACT_1
+	{ id: 27, source:  25, target:  12,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> RD_0
+	{ id: 28, source:  25, target:  17,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> RD_1
+	{ id: 29, source:  25, target:  15,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> RDA_0
+	{ id: 30, source:  25, target:  20,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> RDA_1
+	{ id: 31, source:  25, target:  13,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> WR_0
+	{ id: 32, source:  25, target:  18,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> WR_1
+	{ id: 33, source:  25, target:  14,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> WRA_0
+	{ id: 34, source:  25, target:  19,  type: "timed", name: "tXSDLL",   delay: 20, age: -1},  // SREFEX   -<> WRA_1
+	
+	{ id: 35, source:   6, target:  24,  type: "timed", name: "tACTPDEN", delay: 20, age: -1},  // ACT_0    -<> PDEA
+	{ id: 36, source:   7, target:  24,  type: "timed", name: "tACTPDEN", delay: 20, age: -1},  // ACT_0    -<> PDEA
+	{ id: 37, source:  16, target:  24,  type: "timed", name: "tPRPDEN",  delay: 20, age: -1},  // PRE_0    -<> PDEA
+	{ id: 38, source:  21, target:  24,  type: "timed", name: "tPRPDEN",  delay: 20, age: -1},  // PRE_1    -<> PDEA
+	{ id: 39, source:  12, target:  24,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RD_0     -<> PDEA
+	{ id: 40, source:  17, target:  24,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RD_1     -<> PDEA
+	{ id: 41, source:  12, target:  11,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RD_0     -<> PDEP
+	{ id: 42, source:  17, target:  11,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RD_1     -<> PDEP
+	
+	{ id: 43, source:  15, target:  24,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_0    -<> PDEA
+	{ id: 44, source:  20, target:  24,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_1    -<> PDEA
+	{ id: 45, source:  15, target:  11,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_0    -<> PDEP
+	{ id: 46, source:  20, target:  11,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_1    -<> PDEP
+	{ id: 47, source:  15, target:   9,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_0    -<> REFA
+	{ id: 48, source:  20, target:   9,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_1    -<> REFA
+	{ id: 49, source:  15, target:  10,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_0    -<> SREFEN
+	{ id: 50, source:  20, target:  10,  type: "timed", name: "tRDPDEN",  delay: 20, age: -1},  // RDA_1    -<> SREFEN
  ]	
 };
 
