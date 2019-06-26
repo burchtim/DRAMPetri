@@ -133,11 +133,12 @@ var petriNet = {
     { source:  2, target:  8, type: "reset",     weight: 1 },  // BANK_1  >> PREA
 	
 	//timed arcs:
-	{ id: 0, source:  6, target:  7,  type: "timed", name: "tRRD", delay: 3000, age: -1},  // ACT_0    -<> ACT_1
-	{ id: 1, source:  7, target:  6,  type: "timed", name: "tRRD", delay: 3000, age: -1},  // ACT_1    -<> ACT_0
-	{ id: 2, source:  6, target:  12, type: "timed", name: "tRCD", delay: 5000, age: -1},  // ACT_0    -<> RD_0
-	{ id: 3, source:  7, target:  17, type: "timed", name: "tRCD", delay: 5000, age: -1},  // ACT_1    -<> RD_1 
-	{ id: 4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 5000, age: -1},  // RD_0    -<> RD_0
+	{ id: 0, source:  6, target:  7,  type: "timed", name: "tRRD", delay: 20, age: -1},  // ACT_0    -<> ACT_1
+	{ id: 1, source:  7, target:  6,  type: "timed", name: "tRRD", delay: 20, age: -1},  // ACT_1    -<> ACT_0
+	{ id: 2, source:  6, target:  12, type: "timed", name: "tRCD", delay: 12.5, age: -1},  // ACT_0    -<> RD_0
+	{ id: 3, source:  7, target:  17, type: "timed", name: "tRCD", delay: 12.5, age: -1},  // ACT_1    -<> RD_1 
+	{ id: 4, source:  12, target: 12, type: "timed", name: "tCCD", delay: 10, age: -1},  // RD_0    -<> RD_0
+	{ id: 5, source:  17, target: 17, type: "timed", name: "tCCD", delay: 10, age: -1},  // RD_1    -<> RD_1
  ]	
 };
 
@@ -234,30 +235,6 @@ function checkTimed()
 	});
 }
 
-function checkTimed2()
-{
-	petriNet.arcs.filter(function(d) { // Get all input arcs:
-			return (d.type == "timed");
-	}).forEach(function(arc, i){ // Foreach timed arc get the source transitions:	
-		
-		var trans = petriNet.transitions.filter(function(f) {
-				return f.id == arc.target;
-        })[0];
-
-		
-		
-
-		
-		if(arc.age < arc.delay && arc.age != -1) {
-			trans.timedInhibited = 1;
-			console.log("ARC: "+arc.id+" "+timedArrow);
-						
-		} else {
-		    trans.timedInhibited = 0;
-		}
-	});
-}
-
 function checkInhibited()
 {
 	// Mark all enabled transitions:
@@ -328,12 +305,12 @@ function drawline (id, name, x1, x2, y1, y2) {
 
 	if (x1==x2 && y1==y2){
 		var ellipticLine = document.createElementNS(NS,'path');
-		ellipticLine.setAttributeNS(null, 'id', "timedArrow-"+id);
-		//ellipticLine.setAttributeNS(null, 'd',"M 34.55257,37.274917 A 20.805597,20.895227 0 0 1 6.0455462,35.607419 20.805597,20.895227 0 0 1 6.0455465,6.9290685 20.805597,20.895227 0 0 1 34.55257,5.2615712");
-		ellipticLine.setAttributeNS(null, 'd',"M "+pt1b.x+","+pt1b.y+" A 16,8 1 1 0 "+(pt1b.x+16)+","+pt1b.y);
+		ellipticLine.setAttributeNS(null, 'id', "timedArrow-"+id);	//M = start koordinate , rx = 14 , ry = 8 , x-rotation(in degree)/large-arc-flag/sweep-flag = 0 , last statement = end koordinate
+		ellipticLine.setAttributeNS(null, 'd',"M "+pt1b.x+","+pt1b.y+" A 14 8 0 0 0 "+(pt1b.x)+","+(pt1b.y+32));
 		ellipticLine.setAttributeNS(null, "stroke", "blue");
+		ellipticLine.setAttributeNS(null, "fill", "none");
 		ellipticLine.setAttributeNS(null, "marker-end", "url(#DiamondL)");
-		//ellipticLine.setAttributeNS(null, "visibility", "hidden");
+		ellipticLine.setAttributeNS(null, "visibility", "hidden");
 		svg.append(ellipticLine);
 	} else {
 		var newLine = document.createElementNS(NS,'line');
@@ -348,19 +325,23 @@ function drawline (id, name, x1, x2, y1, y2) {
 		svg.append(newLine);
 	}		
 	var newText = document.createElementNS(NS,"text");
-	newText.setAttributeNS(null,"x", (pt1b.x - pt2b.x) / 2 + pt2b.x);     
-	newText.setAttributeNS(null,"y", (pt1b.y - pt2b.y) / 2 + pt2b.y); 
+	if (x1==x2 && y1==y2){
+		newText.setAttributeNS(null,"x", (pt1b.x-16));		
+		newText.setAttributeNS(null,"y", (pt1b.y-12));
+	} else {
+		newText.setAttributeNS(null,"x", (pt1b.x - pt2b.x) / 2 + pt2b.x);
+		newText.setAttributeNS(null,"y", (pt1b.y - pt2b.y) / 2 + pt2b.y);
+	}
 	newText.setAttributeNS(null,"font-size","16");
 	newText.setAttributeNS(null,"fill","blue");
 	newText.setAttributeNS(null, 'id', "timedArrowText-"+id);
 	newText.setAttributeNS(null, "visibility", "hidden");
-	
+
 	var textNode = document.createTextNode(name);
 	newText.appendChild(textNode);
-	
+
 	svg.append(newText);
 }
-
 
 function init(evt) {
 	checkEnabled();
@@ -478,7 +459,7 @@ function clock() {
 	}).forEach(function(arc, i){ // Foreach timed arc increase the age:
 		if(arc.age != -1)
 		{
-			arc.age += 1000;
+			arc.age += 2.5;
 		}
 	});
 	
