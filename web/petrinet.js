@@ -159,11 +159,11 @@ var petriNet = {
 	
 	{ id: 20, source:   9, target:   6,  type: "timed", name: "tRFC" ,    delay: 110.0, age: -1},  // REFA     -<> ACT_0
 	{ id: 21, source:   9, target:   7,  type: "timed", name: "tRFC",     delay: 110.0, age: -1},  // REFA     -<> ACT_1
-	{ id: 22, source:  23, target:   6,  type: "timed", name: "tXP",      delay:  7.5, age: -1},  // PDXP     -<> ACT_0
-	{ id: 23, source:  23, target:   7,  type: "timed", name: "tXP",      delay:  7.5, age: -1},  // PDXP     -<> ACT_1
+	{ id: 22, source:  23, target:   6,  type: "timed", name: "tXP",      delay:   7.5, age: -1},  // PDXP     -<> ACT_0
+	{ id: 23, source:  23, target:   7,  type: "timed", name: "tXP",      delay:   7.5, age: -1},  // PDXP     -<> ACT_1
 	
-	{ id: 24, source:  25, target:   6,  type: "timed", name: "tXS",      delay: 120.0, age: -1},  // SREFEX   -<> ACT_0
-	{ id: 25, source:  25, target:   7,  type: "timed", name: "tXS",      delay: 120.0, age: -1},  // SREFEX   -<> ACT_1
+	{ id: 24, source:  25, target:   6,  type: "timed", name: "tXS",      delay:  120.0, age: -1},  // SREFEX   -<> ACT_0
+	{ id: 25, source:  25, target:   7,  type: "timed", name: "tXS",      delay:  120.0, age: -1},  // SREFEX   -<> ACT_1
 	{ id: 26, source:  25, target:  12,  type: "timed", name: "tXSDLL",   delay: 1280.0, age: -1},  // SREFEX   -<> RD_0
 	{ id: 27, source:  25, target:  17,  type: "timed", name: "tXSDLL",   delay: 1280.0, age: -1},  // SREFEX   -<> RD_1
 	{ id: 28, source:  25, target:  15,  type: "timed", name: "tXSDLL",   delay: 1280.0, age: -1},  // SREFEX   -<> RDA_0
@@ -175,32 +175,32 @@ var petriNet = {
 	
 	{ id: 34, source:   6, target:  24,  type: "timed", name: "tACTPDEN", delay:  2.5, age: -1},  // ACT_0    -<> PDEA
 	{ id: 35, source:   7, target:  24,  type: "timed", name: "tACTPDEN", delay:  2.5, age: -1},  // ACT_1    -<> PDEA
-	{ id: 36, source:  16, target:  24,  type: "timed", name: "tPRPDEN",  delay: 2.5, age: -1},  // PRE_0    -<> PDEA
-	{ id: 37, source:  21, target:  24,  type: "timed", name: "tPRPDEN",  delay: 2.5, age: -1},  // PRE_1    -<> PDEA
+	{ id: 36, source:  16, target:  24,  type: "timed", name: "tPRPDEN",  delay:  2.5, age: -1},  // PRE_0    -<> PDEA
+	{ id: 37, source:  21, target:  24,  type: "timed", name: "tPRPDEN",  delay:  2.5, age: -1},  // PRE_1    -<> PDEA
 	{ id: 38, source:  12, target:  24,  type: "timed", name: "tRDPDEN",  delay: 25.0, age: -1},  // RD_0     -<> PDEA
 	{ id: 39, source:  17, target:  24,  type: "timed", name: "tRDPDEN",  delay: 25.0, age: -1},  // RD_1     -<> PDEA
 	{ id: 40, source:  12, target:  11,  type: "timed", name: "tRDPDEN",  delay: 25.0, age: -1},  // RD_0     -<> PDEP
 	{ id: 41, source:  17, target:  11,  type: "timed", name: "tRDPDEN",  delay: 25.0, age: -1},  // RD_1     -<> PDEP
 	
-	{ id: 42, source:  15, target:  24,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  // RDA_0    -<> PDEA
-	{ id: 43, source:  20, target:  24,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  // RDA_1    -<> PDEA
-	{ id: 44, source:  15, target:  11,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  // RDA_0    -<> PDEP
-	{ id: 45, source:  20, target:  11,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  // RDA_1    -<> PDEP
-	{ id: 46, source:  15, target:   9,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  // RDA_0    -<> REFA
-	{ id: 47, source:  20, target:   9,  type: "timed", name: "tRTP + tRP",  delay: (10.0+12.5), age: -1},  // RDA_1    -<> REFA
-	{ id: 48, source:  15, target:  10,  type: "timed", name: "tRTP + tRP",  delay: (10.0+12.5), age: -1},  // RDA_0    -<> SREFEN
-	{ id: 49, source:  20, target:  10,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  // RDA_1    -<> SREFEN
+	{ id: 42, source:  15, target:  24,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1}, 		  // RDA_0    -<> PDEA
+	{ id: 43, source:  20, target:  24,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},		  // RDA_1    -<> PDEA
+	{ id: 44, source:  15, target:  11,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},		  // RDA_0    -<> PDEP
+	{ id: 45, source:  20, target:  11,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1}, 		  // RDA_1    -<> PDEP
+	{ id: 46, source:  15, target:   9,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1},  	  // RDA_0    -<> REFA
+	{ id: 47, source:  20, target:   9,  type: "timed", name: "tRTP + tRP", delay: (10.0+12.5), age: -1}, // RDA_1    -<> REFA
+	{ id: 48, source:  15, target:  10,  type: "timed", name: "tRTP + tRP", delay: (10.0+12.5), age: -1}, // RDA_0    -<> SREFEN
+	{ id: 49, source:  20, target:  10,  type: "timed", name: "tRDPDEN",    delay: 25.0, age: -1}, 	  	  // RDA_1    -<> SREFEN
 	
-	{ id: 50, source:  13, target:  24,  type: "timed", name: "tWRPDEN",    delay: 37.5, age: -1},  // WR_0     -<> PDEA
-	{ id: 51, source:  18, target:  24,  type: "timed", name: "tWRPDEN",    delay: 37.5, age: -1},  // WR_1     -<> PDEA
-	{ id: 52, source:  14, target:  24,  type: "timed", name: "tWRAPDEN",   delay: 35.0, age: -1},  // WRA_0    -<> PDEA
-	{ id: 53, source:  19, target:  24,  type: "timed", name: "tWRAPDEN",   delay: 35.0, age: -1},  // WRA_1    -<> PDEA
-	{ id: 54, source:  14, target:  11,  type: "timed", name: "tWRAPDEN",   delay: 35.0, age: -1},  // WRA_0    -<> PDEP
-	{ id: 55, source:  19, target:  11,  type: "timed", name: "tWRAPDEN",   delay: 35.0, age: -1},  // WRA_1    -<> PDEP
-	{ id: 56, source:  14, target:   9,  type: "timed", name: "tWRPRE + tRP",  delay: (27.5+12.5), age: -1},  // WRA_0    -<> REFA
-	{ id: 57, source:  19, target:   9,  type: "timed", name: "tWRPRE + tRP",  delay: (27.5+12.5), age: -1},  // WRA_1    -<> REFA
-	{ id: 58, source:  14, target:  10,  type: "timed", name: "tWRAPDEN",   delay: 35.0, age: -1},  // WRA_0    -<> SREFEN
-	{ id: 59, source:  19, target:  10,  type: "timed", name: "tWRAPDEN",   delay: 35.0, age: -1},  // WRA_1    -<> SREFEN
+	{ id: 50, source:  13, target:  24,  type: "timed", name: "tWRPDEN",      delay: 37.5, age: -1}, 	    // WR_0     -<> PDEA
+	{ id: 51, source:  18, target:  24,  type: "timed", name: "tWRPDEN",      delay: 37.5, age: -1}, 	    // WR_1     -<> PDEA
+	{ id: 52, source:  14, target:  24,  type: "timed", name: "tWRAPDEN",     delay: 35.0, age: -1}, 	    // WRA_0    -<> PDEA
+	{ id: 53, source:  19, target:  24,  type: "timed", name: "tWRAPDEN",     delay: 35.0, age: -1},        // WRA_1    -<> PDEA
+	{ id: 54, source:  14, target:  11,  type: "timed", name: "tWRAPDEN",     delay: 35.0, age: -1}, 	    // WRA_0    -<> PDEP
+	{ id: 55, source:  19, target:  11,  type: "timed", name: "tWRAPDEN",     delay: 35.0, age: -1},  		// WRA_1    -<> PDEP
+	{ id: 56, source:  14, target:   9,  type: "timed", name: "tWRPRE + tRP", delay: (27.5+12.5), age: -1}, // WRA_0    -<> REFA
+	{ id: 57, source:  19, target:   9,  type: "timed", name: "tWRPRE + tRP", delay: (27.5+12.5), age: -1}, // WRA_1    -<> REFA
+	{ id: 58, source:  14, target:  10,  type: "timed", name: "tWRAPDEN",     delay: 35.0, age: -1},  		// WRA_0    -<> SREFEN
+	{ id: 59, source:  19, target:  10,  type: "timed", name: "tWRAPDEN",     delay: 35.0, age: -1},	    // WRA_1    -<> SREFEN
 	  
 	{ id: 60, source:  22, target:   6,  type: "timed", name: "tXP",  delay:  7.5, age: -1},  // PDXA    -<> ACT_0
 	{ id: 61, source:  22, target:   7,  type: "timed", name: "tXP",  delay:  7.5, age: -1},  // PDXA    -<> ACT_1
@@ -234,16 +234,16 @@ var petriNet = {
 	{ id: 88, source:  12, target:   8,  type: "timed", name: "tRTP",   delay: 10.0, age: -1},  // RD_0    -<> PREA
 	{ id: 89, source:  17, target:   8,  type: "timed", name: "tRTP",   delay: 10.0, age: -1},  // RD_1    -<> PREA
 	
-	{ id: 90, source:  13, target:  13,  type: "timed", name: "tCCD",    delay: 10.0, age: -1},  // WR_0    -<> WR_0
-	{ id: 91, source:  13, target:  18,  type: "timed", name: "tCCD",    delay: 10.0, age: -1},  // WR_0    -<> WR_1
-	{ id: 92, source:  18, target:  13,  type: "timed", name: "tCCD",    delay: 10.0, age: -1},  // WR_1    -<> WR_0
-	{ id: 93, source:  18, target:  18,  type: "timed", name: "tCCD",    delay: 10.0, age: -1},  // WR_1    -<> WR_1
-	{ id: 94, source:  13, target:  12,  type: "timed", name: "tWRRD",   delay: 32.5, age: -1},  // WR_0    -<> RD_0
-	{ id: 95, source:  13, target:  17,  type: "timed", name: "tWRRD",   delay: 32.5, age: -1},  // WR_0    -<> RD_1
-	{ id: 96, source:  18, target:  12,  type: "timed", name: "tWRRD",   delay: 32.5, age: -1},  // WR_1    -<> RD_0
-	{ id: 97, source:  18, target:  17,  type: "timed", name: "tWRRD",   delay: 32.5, age: -1},  // WR_1    -<> RD_1
-	{ id: 98, source:  13, target:  14,  type: "timed", name: "tCCD",    delay: 10.0, age: -1},  // WR_0    -<> WRA_0
-	{ id: 99, source:  13, target:  19,  type: "timed", name: "tCCD",    delay: 10.0, age: -1},  // WR_0    -<> WRA_1
+	{ id:  90, source:  13, target:  13,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_0    -<> WR_0
+	{ id:  91, source:  13, target:  18,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_0    -<> WR_1
+	{ id:  92, source:  18, target:  13,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_1    -<> WR_0
+	{ id:  93, source:  18, target:  18,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_1    -<> WR_1
+	{ id:  94, source:  13, target:  12,  type: "timed", name: "tWRRD",  delay: 32.5, age: -1},  // WR_0    -<> RD_0
+	{ id:  95, source:  13, target:  17,  type: "timed", name: "tWRRD",  delay: 32.5, age: -1},  // WR_0    -<> RD_1
+	{ id:  96, source:  18, target:  12,  type: "timed", name: "tWRRD",  delay: 32.5, age: -1},  // WR_1    -<> RD_0
+	{ id:  97, source:  18, target:  17,  type: "timed", name: "tWRRD",  delay: 32.5, age: -1},  // WR_1    -<> RD_1
+	{ id:  98, source:  13, target:  14,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_0    -<> WRA_0
+	{ id:  99, source:  13, target:  19,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_0    -<> WRA_1
 	{ id: 100, source:  18, target:  14,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_1    -<> WRA_0
 	{ id: 101, source:  18, target:  19,  type: "timed", name: "tCCD",   delay: 10.0, age: -1},  // WR_1    -<> WRA_1
 	{ id: 102, source:  13, target:  15,  type: "timed", name: "tWRRD",  delay: 32.5, age: -1},  // WR_0    -<> RDA_0
@@ -281,18 +281,18 @@ var petriNet = {
 	{ id: 131, source:  21, target:  10,  type: "timed", name: "tPRPDEN", delay:  2.5, age: -1},  // PRE_1    -<> SREFEN
 	
 	{ id: 132, source:   9, target:   9,  type: "timed", name: "tRFC",     delay: 110.0, age: -1},  // REFA      -<> REFA
-	{ id: 133, source:   9, target:  11,  type: "timed", name: "tREFPDEN", delay:  2.5, age: -1},  // REFA      -<> PDEP
-	{ id: 134, source:   8, target:   9,  type: "timed", name: "tRP",      delay: 12.5, age: -1},  // PREA      -<> REFA
-	{ id: 135, source:  11, target:  23,  type: "timed", name: "tPD",      delay:  7.5, age: -1},  // PDEP      -<> PDXP
-	{ id: 136, source:  24, target:  22,  type: "timed", name: "tPD",  	   delay:  7.5, age: -1},  // PDEA      -<> PDXA
-	{ id: 137, source:  23, target:  11,  type: "timed", name: "tCKE", 	   delay:  7.5, age: -1},  // PDXP      -<> PDEP
-	{ id: 138, source:  23, target:   9,  type: "timed", name: "tXP",      delay:  7.5, age: -1},  // PDXP      -<> REFA
-	{ id: 139, source:  23, target:  10,  type: "timed", name: "tXP",      delay:  7.5, age: -1},  // PDXP      -<> SREFEN
-	{ id: 140, source:  22, target:  24,  type: "timed", name: "tCKE",     delay:  7.5, age: -1},  // PDXA      -<> PDEA
-	{ id: 141, source:  22, target:   8,  type: "timed", name: "tXP",      delay:  7.5, age: -1},  // PDXA      -<> PREA
-	{ id: 142, source:  10, target:  25,  type: "timed", name: "tCKESR",   delay: 10.0, age: -1},  // SREFEN    -<> SREFEX
-	{ id: 143, source:   8, target:  11,  type: "timed", name: "tPRPDEN",  delay:  2.5, age: -1},  // PREA      -<> PDEP
-	{ id: 144, source:   8, target:  10,  type: "timed", name: "trp",      delay: 12.5, age: -1},  // PREA      -<> SREFEN
+	{ id: 133, source:   9, target:  11,  type: "timed", name: "tREFPDEN", delay:   2.5, age: -1},  // REFA      -<> PDEP
+	{ id: 134, source:   8, target:   9,  type: "timed", name: "tRP",      delay:  12.5, age: -1},  // PREA      -<> REFA
+	{ id: 135, source:  11, target:  23,  type: "timed", name: "tPD",      delay:   7.5, age: -1},  // PDEP      -<> PDXP
+	{ id: 136, source:  24, target:  22,  type: "timed", name: "tPD",  	   delay:   7.5, age: -1},  // PDEA      -<> PDXA
+	{ id: 137, source:  23, target:  11,  type: "timed", name: "tCKE", 	   delay:   7.5, age: -1},  // PDXP      -<> PDEP
+	{ id: 138, source:  23, target:   9,  type: "timed", name: "tXP",      delay:   7.5, age: -1},  // PDXP      -<> REFA
+	{ id: 139, source:  23, target:  10,  type: "timed", name: "tXP",      delay:   7.5, age: -1},  // PDXP      -<> SREFEN
+	{ id: 140, source:  22, target:  24,  type: "timed", name: "tCKE",     delay:   7.5, age: -1},  // PDXA      -<> PDEA
+	{ id: 141, source:  22, target:   8,  type: "timed", name: "tXP",      delay:   7.5, age: -1},  // PDXA      -<> PREA
+	{ id: 142, source:  10, target:  25,  type: "timed", name: "tCKESR",   delay:  10.0, age: -1},  // SREFEN    -<> SREFEX
+	{ id: 143, source:   8, target:  11,  type: "timed", name: "tPRPDEN",  delay:   2.5, age: -1},  // PREA      -<> PDEP
+	{ id: 144, source:   8, target:  10,  type: "timed", name: "trp",      delay:  12.5, age: -1},  // PREA      -<> SREFEN
 	{ id: 145, source:  25, target:   9,  type: "timed", name: "tXS",	   delay: 120.0, age: -1},  // SREFEX    -<> REFA
 	{ id: 146, source:  25, target:  11,  type: "timed", name: "tXS", 	   delay: 120.0, age: -1},  // SREFEX    -<> PDEP
 	{ id: 147, source:  25, target:  10,  type: "timed", name: "tXS", 	   delay: 120.0, age: -1},  // SREFEX    -<> SREFEN
